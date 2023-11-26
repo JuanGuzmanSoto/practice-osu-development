@@ -22,6 +22,7 @@ def get_osu_user_stats(username):
             return f"Error: {response.status_code}"
     except Exception as e:
         return f"An error occurred: {e}"
+<<<<<<< HEAD
 def get_user_top_play_and_beatmap(username):
     top_play_url = "https://osu.ppy.sh/api/get_user_best"
     params = {
@@ -62,11 +63,17 @@ def get_user_top_play_and_beatmap(username):
         print(f"An error occurred: {e}")
         return None
 
+=======
+>>>>>>> 2d1f7a9671b2aa94690632dd0d844a4e70a121b2
 
 def fetch_avatar(url):
     try:
         response = requests.get(url)
+<<<<<<< HEAD
         response.raise_for_status()  
+=======
+        response.raise_for_status()  # Raises an HTTPError if the HTTP request returned an unsuccessful status code
+>>>>>>> 2d1f7a9671b2aa94690632dd0d844a4e70a121b2
         image = Image.open(requests.get(url, stream=True).raw)
         image.thumbnail((100, 100))  
         return ImageTk.PhotoImage(image)
@@ -77,6 +84,7 @@ def fetch_avatar(url):
 def on_submit():
     username = user_name_entry.get()
     user_data = get_osu_user_stats(username)
+<<<<<<< HEAD
     top_play_data = get_user_top_play_and_beatmap(username)
 
     if isinstance(user_data, dict):
@@ -98,11 +106,18 @@ def on_submit():
                 beatmap_image_label.config(image=beatmap_image)
                 beatmap_image_label.image = beatmap_image
         avatar_url = f"https://a.ppy.sh/{user_data['user_id']}"  
+=======
+
+    if isinstance(user_data, dict):
+        stats = f"Username: {user_data['username']}\nRank: {user_data['pp_rank']}\nPerformance Points: {user_data['pp_raw']}"
+        avatar_url = f"https://a.ppy.sh/{user_data['user_id']}"
+>>>>>>> 2d1f7a9671b2aa94690632dd0d844a4e70a121b2
         avatar_image = fetch_avatar(avatar_url)
         if avatar_image:
             avatar_label.config(image=avatar_image)
             avatar_label.image = avatar_image  
     else:
+<<<<<<< HEAD
         stats = "Error fetching user data"
 
     result_label.config(text=stats)
@@ -126,3 +141,25 @@ beatmap_image_label.pack()
 
 
 root.mainloop()
+=======
+        stats = user_data 
+
+    result_label.config(text=stats)
+
+# Set up the main window
+root = tk.Tk()
+root.title("osu! User Stats")
+
+tk.Label(root, text="Enter osu! username:").pack()
+user_name_entry = tk.Entry(root)
+user_name_entry.pack()
+submit_button = tk.Button(root, text="Get Stats", command=on_submit)
+submit_button.pack()
+avatar_label = tk.Label(root)
+avatar_label.pack()
+result_label = tk.Label(root, text="")
+result_label.pack()
+
+
+root.mainloop()
+>>>>>>> 2d1f7a9671b2aa94690632dd0d844a4e70a121b2
